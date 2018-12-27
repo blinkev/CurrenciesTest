@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CurrenciesTest</string>
+    <string name="error_text">No network</string>
+</resources>
