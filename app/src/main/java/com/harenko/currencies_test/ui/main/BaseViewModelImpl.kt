@@ -24,15 +24,9 @@ abstract class BaseViewModelImpl<C> : ViewModel(), BaseViewModel<C> {
     protected fun <M> Observable<M>.trackAndSubscribe(operationId: Int, onNext: (DataStatus<M>) -> Unit) {
         if (!operationSet.contains(operationId)) {
             compositeDisposable.add(this
-                    .toDataStatus()
-                    .doOnNext {
-                        when (it) {
-                            is DataStatus.Error,
-                            is DataStatus.Data -> operationSet.remove(operationId)
-                        }
-                    }
-                    .doOnDispose { operationSet.remove(operationId) }
+                    .doFinally { operationSet.remove(operationId) }
                     .doOnSubscribe { operationSet.add(operationId) }
+                    .toDataStatus()
                     .subscribe(onNext)
             )
         }
