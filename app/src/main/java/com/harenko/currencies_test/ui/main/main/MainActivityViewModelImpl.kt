@@ -67,7 +67,7 @@ class MainActivityViewModelImpl @Inject constructor() : BaseViewModelImpl<MainAc
                     }
                 }
                 .trackAndSubscribe(operationId = currencyRepo.hashCode()) { result: DataStatus<UiData> ->
-                    if (currencies.value != result) currencies.value = result
+                    currencies.value = result
                 }
     }
 
